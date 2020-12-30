@@ -95,6 +95,9 @@ function to($url){
     header("location:".$url);
 }
 
+
+$Poster=New DB("poster");
+
 //test
 
 // $tt=['text'=>333,'sh'=>1];
