@@ -1,0 +1,31 @@
+<?php
+include_once "../base.php";
+
+$movie=$Movie->find($_POST['id']);
+
+if(!empty($_FILES['trailer']['tmp_name'])){
+    $movie['trailer']=$_FILES['trailer']['name'];
+    move_uploaded_file($_FILES['trailer']['tmp_name'],'../img/'.$_FILES['trailer']['name']);
+}
+
+if(!empty($_FILES['poster']['tmp_name'])){
+    $movie['poster']=$_FILES['poster']['name'];
+    move_uploaded_file($_FILES['poster']['tmp_name'],'../img/'.$_FILES['poster']['name']);
+}
+
+// $_POST['sh']=1;
+// $data['rank']=$Movie->q("select max(rank) from movie")[0][0]+1;
+
+foreach($movie as $key=>$value){
+    if(isset($_POST[$key])){
+        if($value!=$_POST[$key]){ //比對資料是否不同
+            $movie[$key]=$_POST[$key]; //存回
+        }
+    }
+}
+
+$Movie->save($movie);
+
+
+to('../backend.php?do=movie');
+?>
