@@ -14,6 +14,7 @@
             <div>片長：<input type="text" name="length"></div>
             <div>上映日期：
                 <select name="year">年
+                <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
                 </select>

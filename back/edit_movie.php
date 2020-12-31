@@ -19,6 +19,7 @@ $movie=$Movie->find($_GET['id']);
             <div>片長：<input type="text" name="length" value="<?=$movie['length'];?>"></div>
             <div>上映日期：
                 <select name="year">年
+                <option value="2020" <?=($movie['month']=="2020")?"selected":"";?>>2020</option>
                 <option value="2021" <?=($movie['month']=="2021")?"selected":"";?>>2021</option>
                 <option value="2022" <?=($movie['day']=="2022")?"selected":"";?>>2022</option>
                 </select>

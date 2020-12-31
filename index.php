@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<?php include_once "base.php"; ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0047)? -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,7 +24,7 @@
   <div id="mm">
   <?php
   // $do=(isset($_GET['do']))?$_GET['do']:'main';
-  $do=isset($_GET['do'])??'main'; //只有在isset的狀態下 可將?後成立條件改成"?"
+  $do=$_GET['do']??'main'; //只有在isset的狀態下 可將?後成立條件改成"?"
   $file='front/'.$do.".php";
 
   if(file_exists($file)){
