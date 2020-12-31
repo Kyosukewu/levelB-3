@@ -97,6 +97,7 @@ function to($url){
 
 
 $Poster=New DB("poster");
+$Movie=New DB("movie");
 
 //test
 
