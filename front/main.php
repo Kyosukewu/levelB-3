@@ -32,6 +32,7 @@
     height: 100px;
     text-align: center;
     flex: 0 0 auto;
+    position: relative;
   }
   .btn img{
     width: 70px;
@@ -94,10 +95,14 @@
         p--
       }
     }
-    $('.btn').hide()
-      for(i=p;i<p+4;i++){
-        $('#b'+i).show()
-      }
+
+    //method1
+    // $('.btn').hide()
+    //   for(i=p;i<p+4;i++){
+    //     $('#b'+i).show()
+    //   }
+    //method2
+    $(".btn").animate({right:p*80})
   })
 
   $('.po').hide()
