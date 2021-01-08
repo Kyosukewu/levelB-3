@@ -9,46 +9,56 @@
 
   .posters>div {
     position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
   .posters img {
     width: 100%;
   }
-  .bot{
+
+  .bot {
     width: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .buttons{
+
+  .buttons {
     width: 320px;
     display: flex;
     overflow: hidden;
     /* justify-content: center; */
     align-items: center;
   }
-  .buttons .btn{
+
+  .buttons .btn {
     width: 80px;
     height: 100px;
     text-align: center;
     flex: 0 0 auto;
     position: relative;
   }
-  .btn img{
+
+  .btn img {
     width: 70px;
   }
-  .arrow{
+
+  .arrow {
     width: 0px;
     height: 0px;
     border-top: 20px solid transparent;
     border-bottom: 20px solid transparent;
     margin: 2px;
   }
-  .l{
-    border-right:20px solid #ffa ;
+
+  .l {
+    border-right: 20px solid #ffa;
   }
-  .r{
-    border-left:20px solid #ffa ;
+
+  .r {
+    border-left: 20px solid #ffa;
   }
 </style>
 <div class="half" style="vertical-align:top;">
@@ -66,32 +76,32 @@
       ?>
     </div>
     <div class="bot">
-    <div class="arrow l"></div>
-    <div class="buttons">
-    <?php
-      foreach ($posters as $key => $poster) {
-        echo "<div class='btn' id='b{$key}' data-ani='{$poster['ani']}'>";
-        echo "<img src='img/{$poster['img']}'>";
-        echo "<span>{$poster['name']}</span>";
-        echo "</div>";
-      }
-      ?>
+      <div class="arrow l"></div>
+      <div class="buttons">
+        <?php
+        foreach ($posters as $key => $poster) {
+          echo "<div class='btn' id='b{$key}' data-ani='{$poster['ani']}'>";
+          echo "<img src='img/{$poster['img']}'>";
+          echo "<span>{$poster['name']}</span>";
+          echo "</div>";
+        }
+        ?>
+      </div>
+      <div class="arrow r"></div>
     </div>
-    <div class="arrow r"></div>
-  </div>
   </div>
 </div>
 <script>
-  let p=0
+  let p = 0
   let pos = $('.po').length
 
-  $('.arrow').on('click',function(){
-    if($(this).hasClass('r')){//判斷點哪一邊
-      if((p+1)<=(pos-4)){
+  $('.arrow').on('click', function() {
+    if ($(this).hasClass('r')) { //判斷點哪一邊
+      if ((p + 1) <= (pos - 4)) {
         p++
       }
-    }else{
-      if((p-1)>=0){
+    } else {
+      if ((p - 1) >= 0) {
         p--
       }
     }
@@ -102,40 +112,108 @@
     //     $('#b'+i).show()
     //   }
     //method2
-    $(".btn").animate({right:p*80})
+    $(".btn").animate({
+      right: p * 80
+    })
   })
 
   $('.po').hide()
   $('#p0').show()
-  let t = setInterval('ani()', 2000)
 
-  function ani() {
+  let t = setInterval('ani()', 2500)
+
+  function ani(next) {
     let now = $(".po:visible") //取得顯示中的海報
-    let ani = $(now).data('ani')//取得目前的轉場效果
-    let next //取得下一張海報
-    if($(now).next().length){//判斷是否有下一張海報
-      next=$(now).next()
-    }else{
-      next=$("#p0")//若無下一張則取第一張
+    let ani = $(now).data('ani') //取得目前的轉場效果
+    //判斷目前正在顯示中的海報是否有下一張海報
+    if (next == undefined) {
+      if ($(now).next().length) {
+        next = $(now).next()
+      } else {
+
+        //如果沒有下一張海報,則取得第一張海報
+        next = $("#p0")
+      }
     }
+
+    // if ($(now).next().length) { //判斷是否有下一張海報
+    //   next = $(now).next()
+    // } else {
+    //   next = $("#p0") //若無下一張則取第一張
+    // }
     // console.log(ani)
     switch (ani) {
-      case 1://淡入淡出
+      case 1: //淡入淡出
         $(now).fadeOut(1000)
         $(next).fadeIn(1000)
         break;
-      case 2://滑入滑出
-        $(now).slideUp(1000,function(){//利用回呼函式進行動作先後
+      case 2: //滑入滑出
+        $(now).slideUp(1000, function() { //利用回呼函式進行動作先後
           $(next).slideDown(1000)
         })
         break;
-      case 3://縮放
+      case 3: //縮放
         $(now).hide(1000)
         $(next).show(1000)
+        break;
+      case 4: //補充 滑出
+
+        $(now).animate({left:-200},1000,function(){
+          $(this).hide()
+          $(this).css({left:0})
+        })
+          $(next).css({left:200})
+          $(next).show()
+          $(next).animate({left:0},1000)
+        break;
+      case 5: //額外補充
+        $(next).css({
+          width: 0,
+          height: 0,
+          top: 130,
+          left: 100
+        })
+        $(now).animate({
+          width: 0,
+          height: 0,
+          top: 130,
+          left: 100
+        }, 1000, function() {
+          $(this).hide() //callback中取不到 now值
+          $(this).css({
+            width: 200,
+            height: 260,
+            top: 0,
+            left: 0
+          })
+          $(next).show()
+          $(next).css({
+            width: 200,
+            height: 260,
+            top: 0,
+            left: 0
+          })
+        })
         break;
     }
 
   }
+
+  $('.btn').on('click', function() {
+    let id = $(this).attr('id').replace("b", "p");
+    //$('.po').hide();
+    // $('#'+id).show();
+    ani($("#" + id));
+  })
+
+  $('.bot').hover(
+    function() {
+      clearInterval(t)
+    },
+    function() {
+      t = setInterval(ani, 2500)
+    }
+  )
 </script>
 <div class="half">
   <h1>院線片清單</h1>
