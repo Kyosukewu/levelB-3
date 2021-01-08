@@ -14,6 +14,41 @@
   .posters img {
     width: 100%;
   }
+  .bot{
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .buttons{
+    width: 320px;
+    display: flex;
+    overflow: hidden;
+    /* justify-content: center; */
+    align-items: center;
+  }
+  .buttons .btn{
+    width: 80px;
+    height: 100px;
+    text-align: center;
+    flex: 0 0 auto;
+  }
+  .btn img{
+    width: 70px;
+  }
+  .arrow{
+    width: 0px;
+    height: 0px;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    margin: 2px;
+  }
+  .l{
+    border-right:20px solid #ffa ;
+  }
+  .r{
+    border-left:20px solid #ffa ;
+  }
 </style>
 <div class="half" style="vertical-align:top;">
   <h1>預告片介紹</h1>
@@ -24,39 +59,68 @@
       foreach ($posters as $key => $poster) {
         echo "<div class='po' id='p{$key}' data-ani='{$poster['ani']}'>";
         echo "<img src='img/{$poster['img']}'>";
+        echo "<span style='display:block;'>{$poster['name']}</span>";
+        echo "</div>";
+      }
+      ?>
+    </div>
+    <div class="bot">
+    <div class="arrow l"></div>
+    <div class="buttons">
+    <?php
+      foreach ($posters as $key => $poster) {
+        echo "<div class='btn' id='b{$key}' data-ani='{$poster['ani']}'>";
+        echo "<img src='img/{$poster['img']}'>";
         echo "<span>{$poster['name']}</span>";
         echo "</div>";
       }
       ?>
     </div>
-    <div class="buttons">
-
-    </div>
+    <div class="arrow r"></div>
+  </div>
   </div>
 </div>
 <script>
+  let p=0
+  let pos = $('.po').length
+
+  $('.arrow').on('click',function(){
+    if($(this).hasClass('r')){//判斷點哪一邊
+      if((p+1)<=(pos-4)){
+        p++
+      }
+    }else{
+      if((p-1)>=0){
+        p--
+      }
+    }
+    $('.btn').hide()
+      for(i=p;i<p+4;i++){
+        $('#b'+i).show()
+      }
+  })
+
   $('.po').hide()
   $('#p0').show()
-  let pos = $('.po').length
   let t = setInterval('ani()', 2000)
 
   function ani() {
-    let now = $(".po:visible")
-    let ani = $(now).data('ani')
-    let next
-    if($(now).next().length){
+    let now = $(".po:visible") //取得顯示中的海報
+    let ani = $(now).data('ani')//取得目前的轉場效果
+    let next //取得下一張海報
+    if($(now).next().length){//判斷是否有下一張海報
       next=$(now).next()
     }else{
-      next=$("#p0")
+      next=$("#p0")//若無下一張則取第一張
     }
-    console.log(ani)
+    // console.log(ani)
     switch (ani) {
       case 1://淡入淡出
         $(now).fadeOut(1000)
         $(next).fadeIn(1000)
         break;
       case 2://滑入滑出
-        $(now).slideUp(1000,function(){
+        $(now).slideUp(1000,function(){//利用回呼函式進行動作先後
           $(next).slideDown(1000)
         })
         break;
