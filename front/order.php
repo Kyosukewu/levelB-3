@@ -1,4 +1,5 @@
 <h4 class="ct">線上訂票</h4>
+<div class="order" style="display:block;">
 <table style="width: 400px; margin:auto;">
 <form>
 <tr>
@@ -15,10 +16,15 @@
 </tr>
 </table>
 <div class="ct">
-    <input type="button" value="確定">
+    <input type="button" value="確定" onclick="booking()">
     <input type="reset" value="重置">
 </div>
 </form>
+</div>
+<div class="booking" style="display:none;">
+
+
+</div>
 
 <script>
 //純前端js作法
@@ -69,4 +75,13 @@ function getSessions(){
 
 }
 
+function booking(){
+    $('.order,.booking').toggle()
+    let movie=$("#movie").val()
+    let date=$("#date").val()
+    let session=$("#session").val()
+    $.get("api/get_bookings.php",{movie,date,session},function(booking){
+        $(".booking").html(booking)
+    })
+}
 </script>
