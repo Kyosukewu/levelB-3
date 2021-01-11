@@ -7,7 +7,7 @@
 </tr>
 <tr>
     <td>日期：</td>
-    <td><select name="date" id="date" style="width:98%;"></select></td>
+    <td><select name="date" id="date" style="width:98%;" onchange="getSessions()"></select></td>
 </tr>
 <tr>
     <td>場次：</td>
@@ -56,6 +56,17 @@ function getDays(){
     //將id船去後台計算可訂票日期
     $.get("api/get_days.php",{movie},function(days){
         $('#date').html(days)
+        getSessions()
     })
 }
+
+function getSessions(){
+    let movie=$("#movie").val()
+    let date=$("#date").val()
+    $.get("api/get_sessions.php",{movie,date},function(sessions){
+        $('#session').html(sessions)
+    })
+
+}
+
 </script>
