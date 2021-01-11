@@ -94,6 +94,7 @@ function finish(){
     let movie=$("#movie").val()
     let date=$("#date").val()
     let session=$("#session").val()
+    // console.log(seats)
     $.post("api/finish_order.php",{seats,movie,date,session},function(num){
         location.href="index.php?do=finish&num="+num
     })
