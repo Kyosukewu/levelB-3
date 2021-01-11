@@ -3,7 +3,7 @@
 <form>
 <tr>
     <td style="width:15%;">電影：</td>
-    <td><select name="movie" id="movie" style="width:98%;"></select></td>
+    <td><select name="movie" id="movie" style="width:98%;" onchange="getDays()"></select></td>
 </tr>
 <tr>
     <td>日期：</td>
@@ -21,6 +21,7 @@
 </form>
 
 <script>
+//純前端js作法
 // let query={};
 // document.location.search.replace("?","").split("&").forEach(function(item,idx){
 //     query[item.split("=")[0]]=item.split("=")[1]
@@ -43,6 +44,18 @@ function getMovies(id){
     }
     $.get("api/get_movies.php",{movie},function(movies){
         $("#movie").html(movies)
+        getDays()
+    })
+}
+
+// $("#movie").on("change",()=>{getDays()})
+
+function getDays(){
+    //取得目前電影選單中的電影id
+    let movie=$('#movie').val()
+    //將id船去後台計算可訂票日期
+    $.get("api/get_days.php",{movie},function(days){
+        $('#date').html(days)
     })
 }
 </script>
