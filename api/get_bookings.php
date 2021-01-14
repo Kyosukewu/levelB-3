@@ -68,6 +68,8 @@ $session = $_GET['session'];
     </div>
 </div>
 <script>
+    $("#ticket").text(0)
+
     let seats = new Array();
     $('.chk').on('click', function() {
         //取得座位值
