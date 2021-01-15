@@ -16,7 +16,7 @@ $level=[
     "保護級",
     "限制級"
 ];
-for($i=1;$i<=10;$i++){
+for($i=1;$i<=12;$i++){
     $data['name']="院線片".$i;
     $data['trailer']="03B".sprintf("%02d",$i)."v.mp4";
     $data['poster']="03B".sprintf("%02d",$i).".png";
@@ -32,4 +32,22 @@ for($i=1;$i<=10;$i++){
     $data['sh']=1;
     $data['rank']=$i;
     $Movie->save($data);
+}
+$sess=[
+    1=>"14:00~16:00",
+    2=>"16:00~18:00",
+    3=>"18:00~20:00",
+    4=>"20:00~22:00",
+    5=>"22:00~24:00"
+];
+//訂單
+for($i=1;$i<=10;$i++){
+    $data['num']=date("Y-m-d").sprintf("%04d",$i);
+    $data['movie']="院線片".rand(2,5);
+    $data['date']=date("Y-m-d");
+    $data['session']=$sess[rand(2,4)];
+    $data['seats']=serialize([$i]);
+    $data['qt']=1;
+
+    $Order->save($data);
 }
