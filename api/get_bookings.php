@@ -46,6 +46,7 @@ $session = $_GET['session'];
 <div class="set-box">
 
     <div style="width: 315px; height:340px; margin:auto; display:flex; flex-wrap:wrap;">
+    <!-- 判斷是否已訂位 -->
         <?php
         for ($i = 0; $i < 20; $i++) {
             echo "<div class='seat empty'>";
