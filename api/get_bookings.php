@@ -61,7 +61,7 @@ foreach($orders as $order){
     <div style="width: 315px; height:340px; margin:auto; display:flex; flex-wrap:wrap;">
     <!-- 判斷是否已訂位 -->
         <?php
-            // print_r($seats);
+            print_r($seats);
         for ($i = 0; $i < 20; $i++) {
             if(in_array($i,$seats)){
                 echo "<div class='seat booked'>";
